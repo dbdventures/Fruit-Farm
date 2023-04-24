@@ -4,7 +4,7 @@ import { useState } from 'react';
 import appleImg from '../img/ya.png';
 import bananaImg from '../img/banana.png';
 import orangeImg from '../img/or.png';
-import water from '../img/water.png';
+import wa from '../img/wa.png';
 import styles from "../App.module.css";
 import axios from 'axios';
 
@@ -27,7 +27,7 @@ const fruits = [
   {
     name: 'Watermelon',
     price: 4.99,
-    imageSrc: water,
+    imageSrc: wa,
   },
 ];
 
@@ -55,12 +55,12 @@ export default function Home() {
   return (
     <div className={styles.mainDiv}>
       <Head>
-        <title className={styles.title}>My Fruit Shop</title>
+        <title className={styles.title}>Hey DBD, Welcome to My Fruit Shop</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <h1 className="title">Welcome to My Fruit Shop</h1>
+        <h1 className={styles.title}>Hey DBD, Welcome to My Fruit Shop</h1>
 
         <div className={styles.grid}>
           {fruits.map((fruit, index) => (
