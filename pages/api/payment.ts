@@ -27,7 +27,7 @@ const handler: NextApiHandler = async (req, res) => {
               "discount_amount": 100,
               "payment_intent_data": {
                 "currency": "USD",
-                "amount": req.body.amount * 100,
+                "amount": Math. trunc(req.body.amount) * 100,
                 "application_fee_amount": 2,
                 "tax_amount": 1,
                 "tip_amount": 1,
