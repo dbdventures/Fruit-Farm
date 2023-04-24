@@ -1,97 +1,95 @@
-import { Inter } from '@next/font/google'
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import ya from '../img/ya.png';
-import or from '../img/or.png';
+import Head from 'next/head';
+import Image from 'next/image';
+import { useState } from 'react';
+import appleImg from '../img/ya.png';
+import bananaImg from '../img/banana.png';
+import orangeImg from '../img/or.png';
+import water from '../img/water.png';
 import styles from "../App.module.css";
-import React, { useState, useEffect, useRef, useContext } from 'react';
-import Form from 'react-bootstrap/Form';
 import axios from 'axios';
-const inter = Inter({ subsets: ['latin'] })
+
+const fruits = [
+  {
+    name: 'Apple',
+    price: 1.99,
+    imageSrc: appleImg,
+  },
+  {
+    name: 'Banana',
+    price: 0.99,
+    imageSrc: bananaImg,
+  },
+  {
+    name: 'Orange',
+    price: 1.49,
+    imageSrc: orangeImg,
+  },
+  {
+    name: 'Watermelon',
+    price: 4.99,
+    imageSrc: water,
+  },
+];
 
 export default function Home() {
-  const [apple, addApple] = useState(false);
-  const [orange, addOrange] = useState(false);
-  const [loaded, isLoading]= useState(false);
-  const [amount, setAmount] = useState(0);
+  const [cart, setCart] = useState([]);
+  const [total, setTotal] = useState(0);
+
+  const handleAddToCart = (fruit: {name: string, price: number, imageSrc: any}) => {
+    //@ts-ignore
+    setCart([...cart, fruit]);
+    setTotal(total + fruit.price);
+  };
 
   const pay = async () => {
-    try{
-      isLoading(true)
-    let data =  await axios.post('/api/payment', {
-      amount: amount
+    try {
+      const response = await axios.post('/api/payment', {
+        amount: total
       });
-            //@ts-ignore
-      setTimeout(() =>
-      isLoading(false), 5000);
-      const checkout_url_parts = data.data.url.split('/');
-      const checkout_id = checkout_url_parts[checkout_url_parts.length -1];
-      const checkout_url = `http://localhost:3002/${checkout_id}`;
-      console.log('checkout_url', checkout_url);
-      location.replace(
-        //@ts-ignore
-        // `${data.data.url}`
-        checkout_url
-      );
-    }catch(e){
-      console.log(e)
+      window.location.href = response.data.url;
+    } catch (error) {
+      console.error(error);
     }
-  }
+  };
+
   return (
-    <>
     <div className={styles.mainDiv}>
-    <div className={styles.cards}>
-    <Card className={styles.first} style={{ width: '18rem' }}>
-    <Card.Img variant="top" src={ya.src} />
-      <Card.Body>
-        <Card.Title>Apple</Card.Title>
-        <Card.Text>
-        вкусные яблоки
-        </Card.Text>
-        <div>
-          <Form>
-        <Form.Check 
-        type="switch"
-        id="custom-switch"
-        label="Add to card"
-        onChange={()=>setAmount(amount+40)}
-      />
-      </Form>
-        </div>
-      </Card.Body>
-    </Card>
-    <Card style={{ width: '18rem' }}>
-    <Card.Img  src={or.src} />
-      <Card.Body>
-        <Card.Title>Oranges</Card.Title>
-        <Card.Text>
-        вкусные апельсины
-        </Card.Text>
-        <div>
-          <Form>
-        <Form.Check 
-        type="switch"
-        id="custom-switch"
-        label="Add to card"
-        onChange={()=>setAmount(amount+40)}
-      />
-      </Form>
-        </div>
-      </Card.Body>
-      <h1>Total: {amount}</h1>
-    </Card>
-    </div>
-    <Button
-      variant="primary"
-      disabled={!isLoading}
-      className={styles.payBtn}
-      onClick={pay}
-    >
-      {loaded ? 'Loading…' : 'Pay'}
-    </Button>
-    </div>
-    </>
-  )
-}
+      <Head>
+        <title className={styles.title}>My Fruit Shop</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
 
+      <main>
+        <h1 className="title">Welcome to My Fruit Shop</h1>
 
+        <div className={styles.grid}>
+          {fruits.map((fruit, index) => (
+            <div key={index} className={styles.card}>
+              <Image src={fruit.imageSrc} alt={fruit.name} width={300} height={200} />
+              <h3>{fruit.name}</h3>
+              <p>${fruit.price.toFixed(2)}</p>
+              <button onClick={() => handleAddToCart(fruit)}>Add to Cart</button>
+            </div>
+          ))}
+        </div>
+
+        {cart.length > 0 && (
+          <div className={styles.cart}>
+            <h2>Cart</h2>
+            {cart.map((fruit:{name: string, price: number, imageSrc: string}, index) => (
+              <div key={index} className={styles.cart_item}>
+                <span>{fruit.name}</span>
+                <span>${fruit.price.toFixed(2)}</span>
+              </div>
+            ))}
+            <div className={styles.cart_total}>
+              <span>Total:</span>
+              <span>${total.toFixed(2)}</span>
+            </div>
+            <button onClick={pay}>Pay Now</button>
+          </div>
+        )}
+      </main>
+      </div>
+      )
+      }
