@@ -6,7 +6,7 @@ const external = ky.extend({
       beforeRequest: [(request)=> {
         request.headers.set('x-api-key', process.env.API_KEY ?? "")
         // request.headers.set('x-partner-id', "part_2OaJVyeHkwTBB5Y4Nl8ql10KkJL")
-        request.headers.set('x-account-id', "acct_2PtANSfCdc4MkfEVymOmEG8bDlg")
+        request.headers.set('x-account-id', process.env.ACCOUNT_ID ?? "")
       }]
     }
   })
