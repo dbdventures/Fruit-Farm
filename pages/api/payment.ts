@@ -18,8 +18,8 @@ const handler: NextApiHandler = async (req, res) => {
       const taxAmmount = 1 * 100;
         const response = await external.post(`${process.env.BASE_URL}/checkout/sessions`, {
             json: {
-              "cancel_url": "http://localhost:3000/error",
-              "success_url": "http://localhost:3000/success",
+              "cancel_url": `${process.env.FRUIT_FARM_URL}/error`,
+              "success_url": `${process.env.FRUIT_FARM_URL}/success`,
               "customer_email": "alec@dbdventures.com",
               "reference_id": "string",
               "payment_method_types": [
