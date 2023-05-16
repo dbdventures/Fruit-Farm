@@ -18,7 +18,7 @@ export default function Home() {
       const response = await axios.post('/api/payment', {
         amount: amount
       });
-      window.location.href = response.data.url;
+      window.location.href = `${response.data.url}`;
     } catch (error) {
       console.error(error);
     }

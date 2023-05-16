@@ -4,9 +4,9 @@ import ky from 'ky';
 const external = ky.extend({
     hooks: {
       beforeRequest: [(request)=> {
-        request.headers.set('x-api-key', "test_key_iVzfMz5OlUpVv38pqgzZlc1GSIOGF-aCtavy4nJJ")
-        // request.headers.set('x-partner-id', "part_2OaJVyeHkwTBB5Y4Nl8ql10KkJL")
-        request.headers.set('x-account-id', "acct_2O2xs8qIeFsyyaQPsDwFqpdgLQp")
+        request.headers.set('x-api-key', process.env.API_KEY ?? "")
+        // request.headers.set('x-partner-id', "part_2Mv534r8FYWhswRKEvWuVU7VKer")
+        request.headers.set('x-account-id', "acct_1231231313")
       }]
     }
   })
@@ -14,6 +14,8 @@ const external = ky.extend({
 const handler: NextApiHandler = async (req, res) => {
   if (req.method === 'POST') {
     try {
+      const appFee = 2 * 100;
+      const taxAmmount = 1 * 100;
         const response = await external.post(`${process.env.BASE_URL}/checkout/sessions`, {
             json: {
               "cancel_url": "http://localhost:3000/error",
@@ -23,14 +25,14 @@ const handler: NextApiHandler = async (req, res) => {
               "payment_method_types": [
                 "card"
               ],
-              "subtotal": 2000,
+              "subtotal":  (req.body.amount) * 100,
               "discount_amount": 100,
               "payment_intent_data": {
                 "currency": "USD",
-                "amount": Math. trunc(req.body.amount) * 100,
-                "application_fee_amount": 2,
-                "tax_amount": 1,
-                "tip_amount": 1,
+                "amount":(req.body.amount) * 100 + appFee + taxAmmount,
+                "application_fee_amount": appFee,
+                "tax_amount": taxAmmount,
+                "tip_amount": null,
                 "surcharge_amount": 2,
                 "capture": true,
                 "reference_id": "internal-id",
