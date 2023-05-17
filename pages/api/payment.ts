@@ -4,9 +4,9 @@ import ky from 'ky';
 const external = ky.extend({
     hooks: {
       beforeRequest: [(request)=> {
-        request.headers.set('x-api-key', process.env.API_KEY ?? "")
+        request.headers.set('x-api-key', 'test_key_GuKlGA2bHWVZ0xKrz3QXzSQMbNSePoPIVIv98DYG')
         // request.headers.set('x-partner-id', "part_2OaJVyeHkwTBB5Y4Nl8ql10KkJL")
-        request.headers.set('x-account-id', process.env.ACCOUNT_ID ?? "")
+        request.headers.set('x-account-id',  'acct_2PtU3X6AN0qoMJQRm7amai3TSMk')
       }]
     }
   })
