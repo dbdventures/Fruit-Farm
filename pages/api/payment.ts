@@ -5,7 +5,7 @@ const external = ky.extend({
     hooks: {
       beforeRequest: [(request)=> {
         // request.headers.set('x-api-key', 'test_key_GuKlGA2bHWVZ0xKrz3QXzSQMbNSePoPIVIv98DYG')
-         request.headers.set('x-api-key', "some-key")
+         request.headers.set('x-api-key', "some-key-12345")
          request.headers.set('x-partner-id',  'part_2PtQ13uxTnP4E3EwA9LEhHfKwMT')
          request.headers.set('x-account-id',  'acct_2PtU3X6AN0qoMJQRm7amai3TSMk')
       }]
