@@ -62,7 +62,7 @@ export default function Store() {
       setSplits([{
         account_id: process.env.INSURANCE_CO_ACCOUNT_ID ?? "",
         amount: 500,
-        description: 'paying for the insurance',
+        description: 'paying for the insurance!',
       }])
     } else {
       setSplits([])
