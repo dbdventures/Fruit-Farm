@@ -46,6 +46,7 @@ const handler: NextApiHandler = async (req, res) => {
         const response = await external.post(`${process.env.BASE_URL}/checkout/sessions`, {
             json: requestData
         }).json()
+        console.log(response)
         return res.status(200).send(response)
     } catch (error) {
         //@ts-ignore
