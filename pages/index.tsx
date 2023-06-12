@@ -18,18 +18,35 @@ export default function Home() {
   };
 
   return (
-    <div>
-      <h1>Pick a Region</h1>
+    <div style={{ textAlign: 'center', marginTop: '50px' }}>
+      <h1 style={{ color: '#333' }}>Pick a Region</h1>
       <Form onSubmit={handleFormSubmit}>
         <Form.Group>
           <Form.Label>Select Region:</Form.Label>
-          <Form.Control as="select" value={region} onChange={handleRegionChange}>
+          <Form.Control
+            as="select"
+            value={region}
+            onChange={handleRegionChange}
+            style={{ width: '200px', margin: '10px auto' }}
+          >
             <option value="">Choose...</option>
             <option value="North">North</option>
             <option value="South">South</option>
           </Form.Control>
         </Form.Group>
-        <button type="submit">Go to Fruits</button>
+        <button
+          type="submit"
+          style={{
+            backgroundColor: '#007bff',
+            color: '#fff',
+            padding: '10px 20px',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+          }}
+        >
+          Go to Fruits
+        </button>
       </Form>
     </div>
   );
