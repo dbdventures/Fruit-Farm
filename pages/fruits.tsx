@@ -54,13 +54,12 @@ export default function Store() {
       console.error(error);
     }
   };
-
   const handleSwitchChange = (event: any) => {
     const isChecked = event.target.checked;
     setTotal(isChecked ? total + 5 : total - 5);
     if(isChecked) {
       setSplits([{
-        account_id: process.env.INSURANCE_CO_ACCOUNT_ID ?? "",
+        account_id: "acct_2PtU3X6AN0qoMJQRm7amai3TSMk",
         amount: 500,
         description: 'paying for the insurance!',
       }])

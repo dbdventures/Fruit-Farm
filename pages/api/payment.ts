@@ -14,35 +14,38 @@ const external = ky.extend({
 const handler: NextApiHandler = async (req, res) => {
   if (req.method === 'POST') {
     try {
-
       const appFee = 2 * 100;
       const taxAmmount = 1 * 100;
+      const requestData = {
+        "cancel_url": `${process.env.FRUIT_FARM_URL}/error`,
+        "success_url": `${process.env.FRUIT_FARM_URL}/success`,
+        "customer_email": "alec@dbdventures.com",
+        "reference_id": "string",
+        "payment_method_types": [
+          "card"
+        ],
+        "subtotal": ((req.body.amount) * 100).toFixed(2),
+        "discount_amount": 100,
+        "payment_intent_data": {
+          "currency": "USD",
+          "amount":((req.body.amount) * 100 + appFee + taxAmmount).toFixed(2),
+          "application_fee_amount": appFee,
+          "tax_amount": taxAmmount,
+          "tip_amount": null,
+          "surcharge_amount": 2,
+          "capture": true,
+          "reference_id": "internal-id",
+          "description": "Paying for fruits"
+        }
+      }
+
+      if(req.body.splits.length > 0){
+        //@ts-ignore
+        requestData.payment_splits = req.body.splits
+      }
         const response = await external.post(`${process.env.BASE_URL}/checkout/sessions`, {
-            json: {
-              "cancel_url": `${process.env.FRUIT_FARM_URL}/error`,
-              "success_url": `${process.env.FRUIT_FARM_URL}/success`,
-              "customer_email": "alec@dbdventures.com",
-              "reference_id": "string",
-              "payment_method_types": [
-                "card"
-              ],
-              "subtotal": ((req.body.amount) * 100).toFixed(2),
-              "discount_amount": 100,
-              "payment_intent_data": {
-                "currency": "USD",
-                "amount":((req.body.amount) * 100 + appFee + taxAmmount).toFixed(2),
-                "application_fee_amount": appFee,
-                "tax_amount": taxAmmount,
-                "tip_amount": null,
-                "surcharge_amount": 2,
-                "capture": true,
-                "reference_id": "internal-id",
-                "payment_splits": req.body.splits,
-                "description": "Paying for fruits"
-              }
-            }
+            json: requestData
         }).json()
-        console.log(response)
         return res.status(200).send(response)
     } catch (error) {
         //@ts-ignore
