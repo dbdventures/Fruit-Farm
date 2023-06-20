@@ -17,7 +17,7 @@ const handler: NextApiHandler = async (req, res) => {
       const appFee = 2 * 100;
       const taxAmmount = 1 * 100;
       const requestData = {
-        "cancel_url": `${process.env.FRUIT_FARM_URL}/error`,
+        "cancel_url": `${process.env.FRUIT_FARM_URL}/fruits`,
         "success_url": `${process.env.FRUIT_FARM_URL}/success`,
         "customer_email": "alec@dbdventures.com",
         "reference_id": "string",
