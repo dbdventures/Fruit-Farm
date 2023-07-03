@@ -41,7 +41,7 @@ const handler: NextApiHandler = async (req, res) => {
         //@ts-ignore
         requestData.payment_splits = req.body.splits
       }
-        const response = await external.post(`${process.env.BASE_URL}/checkout/sessions`, {
+        const response = await external.post(`${process.env.BASE_URL}/checkout_sessions`, {
             json: requestData
         }).json()
         console.log(response)
