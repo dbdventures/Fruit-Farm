@@ -14,7 +14,7 @@ const external = ky.extend({
 const handler: NextApiHandler = async (req, res) => {
   if (req.method === 'POST') {
     try {
-      const taxAmmount = 1 * 100;
+      const taxAmount = 1 * 100;
       const requestData = {
         "cancel_url": `${process.env.FRUIT_FARM_URL}/fruits`,
         "success_url": `${process.env.FRUIT_FARM_URL}/success`,
@@ -27,8 +27,8 @@ const handler: NextApiHandler = async (req, res) => {
         "discount_amount": 100,
         "payment_intent_data": {
           "currency": "USD",
-          "amount":((req.body.amount) * 100 + taxAmmount).toFixed(2),
-          "tax_amount": taxAmmount,
+          "amount":(parseFloat(req.body.amount) * 100 + taxAmount).toFixed(2),
+          "tax_amount": taxAmount,
           "tip_amount": null,
           "surcharge_amount": 2,
           "capture": true,
